@@ -4,6 +4,12 @@ import { readFileSync } from 'fs';
 import { Hono } from 'hono';
 import { createSecureServer } from 'http2';
 
+declare var process : {
+  env: {
+    PORT: number
+  }
+}
+
 const app = new Hono();
 
 app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }))
@@ -24,7 +30,7 @@ app.get('/', c => {
   });
 });
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 console.log(`Server is running on https://localhost:${port}`);
 
 serve({
